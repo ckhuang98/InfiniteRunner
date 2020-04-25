@@ -16,8 +16,9 @@ class Play extends Phaser.Scene {
 
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 2, first: 0}),
-            frameRate: 30
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1, first: 0}),
+            frameRate: 30,
+            repeat: -1
         });
 
         this.player.anims.play('walk');
