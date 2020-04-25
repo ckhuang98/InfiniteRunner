@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('background', './assets/background.png');           // preload background
-        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 116.922, frameHeight: 139.3362, startFrame: 0, endFrame: 2});      //  preload character
+        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 155.1547, frameHeight: 92.6435, startFrame: 0, endFrame: 2});      //  preload character
     }
 
     create(){
