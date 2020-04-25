@@ -20,7 +20,11 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        this.player.anims.play('walk')
+        this.player.anims.play('walk');
+
+        this.player.on('animationcomplet', () => {
+            this.player.anims.play('walk');
+        });
 
     }
 
