@@ -12,8 +12,8 @@ let game = new Phaser.Game(config);
 let WIDTH = game.config.width;
 let HEIGHT = game.config.height;
 let gameOver = false;
-let spriteFrameWidth = 0;
-let spriteFrameHeight = 0;
+let spriteFrameWidth = 155.1547;
+let spriteFrameHeight = 92.6435;
 
 game.settings = {
     startSpeed: 0.2
