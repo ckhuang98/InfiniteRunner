@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        this.player.anims.play('walk').setRepeat(-1);
+        this.player.anims.play('walk')
 
     }
 
