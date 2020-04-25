@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('background', './assets/background.png');           // preload background
-        this.load.spritesheet('player', './assets/sprite3.png', {frameWidth: 250, frameHeight: 200, startFrame: 0, endFrame: 2});      //  preload character
+        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: spriteFrameWidth, frameHeight: spriteFrameHeight, startFrame: 0, endFrame: 2});      //  preload character
     }
 
     create(){
@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1, first: 0}),
-            frameRate: 30,
+            frameRate: 5,
             repeat: -1
         });
 
