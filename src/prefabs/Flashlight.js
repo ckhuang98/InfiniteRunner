@@ -7,17 +7,10 @@ class Flashlight extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        if (keyLEFT.isDown && this.x >= 0) {
+        if (keyLEFT.isDown && this.x >= -420) {
             this.x -= 2.5;
-        } else if (keyRIGHT.isDown && this.x <= 600) {
+        } else if (keyRIGHT.isDown && this.x <= -180) {
             this.x += 2.5;
         }
-        if (this.x <= 0-this.width) {
-            this.resetRight();
-        }
-    }
-
-    resetRight() {
-        this.x = game.config.width;
     }
 }
