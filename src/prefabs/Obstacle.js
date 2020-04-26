@@ -21,10 +21,10 @@ class Obstacle extends Phaser.GameObjects.Sprite {
             this.x = 248;
             this.y = 0;
         } else if (randomX == 3){
-            this.x = 304;
+            this.x = 308;
             this.y = 0;
         } else{
-            this.x = 355;
+            this.x = 368;
             this.y = 0;
         }
     }
