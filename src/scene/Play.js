@@ -9,10 +9,12 @@ class Play extends Phaser.Scene {
     }
 
     create(){
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0);
 
-        this.player = this.add.sprite(WIDTH/2 -32, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0);
+        this.character = new Character(this, WIDTH/2 -20, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0);
 
         this.anims.create({
             key: 'walk',
@@ -21,16 +23,15 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        this.player.anims.play('walk');
-
-        this.player.on('animationcomplet', () => {
-            this.player.anims.play('walk');
-        });
-
+        this.character.anims.play('walk');
     }
 
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
+
+        if(!gameOver){
+            this.character.update();
+        }
     }
 
 }

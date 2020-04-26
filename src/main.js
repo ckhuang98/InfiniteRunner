@@ -1,8 +1,8 @@
 // game confi obj
 let config = {
     type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
+    width: 600,
+    height: 600,
     scene: [ Play ]
 }
 
@@ -12,6 +12,8 @@ let game = new Phaser.Game(config);
 let WIDTH = game.config.width;
 let HEIGHT = game.config.height;
 let gameOver = false;
+
+let keyLEFT, keyRIGHT;
 
 game.settings = {
     startSpeed: 0.2
