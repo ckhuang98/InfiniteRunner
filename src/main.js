@@ -17,5 +17,5 @@ game.easyMode = true;
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
 game.settings = {
-    startSpeed: 0.2
+    startSpeed: 1
 }
