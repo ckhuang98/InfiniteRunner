@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('background', './assets/background.png');           // preload background
-        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 76.963, frameHeight: 91.9769, startFrame: 0, endFrame: 2});      //  preload character
+        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 91.9769, startFrame: 0, endFrame: 2});      //  preload character
         this.load.image('crack', './assets/crack.png');
         this.load.image('pothole', './assets/pothole.png');
         this.load.image('car', './assets/first_draft_car.png');
