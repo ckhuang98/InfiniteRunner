@@ -13,6 +13,19 @@ class Obstacle extends Phaser.GameObjects.Sprite {
     }
 
     reset() {
-        this.y = 0;
+        let randomX = Phaser.Math.Between(1, 4);
+        if(randomX == 1){
+            this.x = 193;
+            this.y = 0;
+        } else if (randomX == 2){
+            this.x = 248;
+            this.y = 0;
+        } else if (randomX == 3){
+            this.x = 304;
+            this.y = 0;
+        } else{
+            this.x = 355;
+            this.y = 0;
+        }
     }
 }
