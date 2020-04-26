@@ -41,6 +41,23 @@ class Play extends Phaser.Scene {
             this.character.update();
             this.pothole.update();
         }
+        if(this.checkCollision(this.character, this.pothole)){
+            this.character.x = WIDTH/2-10;
+            this.flashlight.x = -300
+        }
+    }
+
+
+    checkCollision(character, obstacle) {
+        // simple AABB checking
+        if (character.x < obstacle.x + obstacle.width && 
+            character.x + character.width > obstacle.x && 
+            character.y < obstacle.y + obstacle.height &&
+            character.height + character.y > obstacle. y) {
+                return true;
+        } else {
+            return false;
+        }
     }
 
 }
