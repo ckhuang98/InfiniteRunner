@@ -6,9 +6,9 @@ class Character extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        if (keyLEFT.isDown && this.x >= 175) {
+        if (keyLEFT.isDown && this.x >= 170) {
             this.x -= 2.5;
-    } else if (keyRIGHT.isDown && this.x <= 425) {
+    } else if (keyRIGHT.isDown && this.x <= 393) {
             this.x += 2.5;
     }
     }
