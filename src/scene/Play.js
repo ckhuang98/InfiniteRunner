@@ -132,7 +132,6 @@ class Play extends Phaser.Scene {
         if(this.heartsLeft == 0){
             this.gameOver = true;
         }
-        console.log(gameOver);
         character.play('flash');
 
         this.flashTime = this.time.delayedCall(2500, () => {
