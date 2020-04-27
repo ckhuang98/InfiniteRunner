@@ -3,7 +3,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 600,
     height: 600,
-    scene: [Menu, Play  ]
+    scene: [Menu, Play, GameOver ]
 }
 
 // main game object
@@ -14,8 +14,13 @@ let HEIGHT = game.config.height;
 let gameOver = false;
 game.easyMode = true;
 
+let level;
+let highScore;
+let newHighScore = false;
+
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
 game.settings = {
-    startSpeed: 1
+    startSpeed: 1,
+    hearts: 5
 }

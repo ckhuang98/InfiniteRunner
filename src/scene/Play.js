@@ -22,7 +22,7 @@ class Play extends Phaser.Scene {
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0);
         this.pothole = new Obstacle(this, WIDTH/2, 0, 'pothole').setOrigin(0,0);
-        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0); // needs a separate class
+        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
 
         this.anims.create({
@@ -32,22 +32,44 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'flash',
+            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 5, first: 0}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.gameOver = false;
+
         this.character.anims.play('walk');
+
+        level = 0;
+        //let previousLevel = 0
+        //let currentTime = this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
+
+        this.difficultyTimer = this.time.addEvent({
+            delay: 1000,
+            callback: this.levelBump,
+            callbackScope: this,
+            loop: true,
+        });  
+        this.heartsLeft = game.settings.hearts;
         
         
     }
 
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
+        //this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5); // broken timer
 
-        if(!gameOver){
+        if(!this.gameOver){
             this.flashlight.update();
             this.character.update();
             this.pothole.update();
+        }else{
+            this.scene.start("gameOverScene");
         }
         if(this.checkCollision(this.character, this.pothole)){
-            this.character.x = WIDTH/2-10;
-            this.flashlight.x = -300
+            this.loseLife(this.character, this.pothole);
         }
     }
 
@@ -58,10 +80,31 @@ class Play extends Phaser.Scene {
             character.x + character.width > obstacle.x && 
             character.y < obstacle.y + obstacle.height &&
             character.height + character.y > obstacle. y) {
+                this.gameOver = true;
                 return true;
+                
+                
         } else {
             return false;
         }
     }
 
+    levelBump() {
+        level++;   
+    }
+    // Makes character lose life, and set gameover to true
+    loseLife(character, obstacle){
+        this.heartsLeft--;
+        obstacle.reset();
+        if(this.heartsLeft == 0){
+            gameOver = true;
+        }
+        character.play('flash');
+
+        this.flashTime = this.time.delayedCall(3000, () => {
+            this.character.play('walk');
+        }, null, this);
+        console.log(this.heartsLeft);
+
+    }
 }
