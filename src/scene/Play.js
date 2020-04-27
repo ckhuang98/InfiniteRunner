@@ -34,7 +34,10 @@ class Play extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
+<<<<<<< HEAD
         this.gameOver = false;
+=======
+>>>>>>> 636cf75ec14ce9e8a504ca4a0350d316162045d2
 
         this.character.anims.play('walk');
 
