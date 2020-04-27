@@ -3,7 +3,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 600,
     height: 600,
-    scene: [Menu, Play  ]
+    scene: [Menu, Play, GameOver ]
 }
 
 // main game object

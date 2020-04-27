@@ -18,7 +18,7 @@ class Play extends Phaser.Scene {
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0);
         this.pothole = new Obstacle(this, WIDTH/2, 0, 'pothole').setOrigin(0,0);
-        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0); // needs a separate class
+        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
 
         this.anims.create({
@@ -28,6 +28,8 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
+        this.gameOver = false;
+
         this.character.anims.play('walk');
         
         
@@ -36,10 +38,12 @@ class Play extends Phaser.Scene {
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
 
-        if(!gameOver){
+        if(!this.gameOver){
             this.flashlight.update();
             this.character.update();
             this.pothole.update();
+        }else{
+            this.scene.start("gameOverScene");
         }
         if(this.checkCollision(this.character, this.pothole)){
             this.character.x = WIDTH/2-10;
