@@ -17,6 +17,7 @@ game.easyMode = true;
 let level;
 let highScore;
 let newHighScore = false;
+let obstacleArray;
 
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
