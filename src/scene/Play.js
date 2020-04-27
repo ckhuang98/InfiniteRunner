@@ -28,16 +28,12 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-<<<<<<< HEAD
         this.anims.create({
             key: 'flash',
             frames: this.anims.generateFrameNumbers('player', {start: 0, end: 5, first: 0}),
             frameRate: 5,
             repeat: -1
         });
-=======
-        this.gameOver = false;
->>>>>>> c01c0b5883ebffdd656780555a2d942ae588ace1
 
         this.character.anims.play('walk');
         this.heartsLeft = game.settings.hearts;
