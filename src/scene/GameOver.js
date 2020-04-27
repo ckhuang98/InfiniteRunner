@@ -4,13 +4,16 @@ class GameOver extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('gameOver', './assets/game_over.png');  
+        this.load.image('gameOver', './assets/game_over.png');
+        this.load.audio('growl', './assets/Monster Growl-SoundBible.com-2140541932.mp3');
     }
 
     create(){
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'gameOver').setOrigin(0,0);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.gameOverSound = this.sound.add('growl'); // sound for when game is over.
+        this.gameOverSound.play();
 
         if(localStorage.getItem('hiscore') != null) {
             let storedScore = parseInt(localStorage.getItem('hiscore'));
