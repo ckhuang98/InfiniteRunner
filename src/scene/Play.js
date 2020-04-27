@@ -8,11 +8,8 @@ class Play extends Phaser.Scene {
         this.load.image('crack', './assets/crack.png');
         this.load.image('pothole', './assets/pothole.png');
         this.load.image('car', './assets/first_draft_car.png');
-<<<<<<< HEAD
         this.load.image('car2', './assets/red_car.png');
-=======
         this.load.image('heart', './assets/heart.png');
->>>>>>> 3acf14ea5d3243897eac2b7393cff985872456ed
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard Door Close-SoundBible.com-399662278.mp3');
