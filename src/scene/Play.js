@@ -44,7 +44,7 @@ class Play extends Phaser.Scene {
 
         level = 0;
         //let previousLevel = 0
-        //let currentTime = this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
+        //currentTime = this.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
 
         this.difficultyTimer = this.time.addEvent({
             delay: 1000,
@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
 
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
-        //this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5); // broken timer
+        //currentTime = this.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
 
         if(!this.gameOver){
             this.flashlight.update();

@@ -14,6 +14,7 @@ let HEIGHT = game.config.height;
 let gameOver = false;
 game.easyMode = true;
 
+let currentTime;
 let level;
 let highScore;
 let newHighScore = false;
