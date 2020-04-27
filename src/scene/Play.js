@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('pothole', './assets/pothole.png');
         this.load.image('car', './assets/first_draft_car.png');
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
-        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
+        this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 3});      //  preload character
     }
 
     create(){
@@ -28,7 +28,15 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'flash',
+            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 5, first: 0}),
+            frameRate: 5,
+            repeat: -1
+        });
+
         this.character.anims.play('walk');
+        this.heartsLeft = game.settings.hearts;
         
         
     }
@@ -42,8 +50,7 @@ class Play extends Phaser.Scene {
             this.pothole.update();
         }
         if(this.checkCollision(this.character, this.pothole)){
-            this.character.x = WIDTH/2-10;
-            this.flashlight.x = -300
+            this.loseLife(this.character, this.pothole);
         }
     }
 
@@ -55,9 +62,27 @@ class Play extends Phaser.Scene {
             character.y < obstacle.y + obstacle.height &&
             character.height + character.y > obstacle. y) {
                 return true;
+                
+                
         } else {
             return false;
         }
+    }
+
+    // Makes character lose life, and set gameover to true
+    loseLife(character, obstacle){
+        this.heartsLeft--;
+        obstacle.reset();
+        if(this.heartsLeft == 0){
+            gameOver = true;
+        }
+        character.play('flash');
+
+        this.flashTime = this.time.delayedCall(3000, () => {
+            this.character.play('walk');
+        }, null, this);
+        console.log(this.heartsLeft);
+
     }
 
 }
