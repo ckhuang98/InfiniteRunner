@@ -14,8 +14,12 @@ let HEIGHT = game.config.height;
 let gameOver = false;
 game.easyMode = true;
 
+let level;
+let highScore;
+let newHighScore = false;
+
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
 game.settings = {
-    startSpeed: 1
+    startSpeed: 4
 }

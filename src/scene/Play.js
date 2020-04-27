@@ -31,12 +31,22 @@ class Play extends Phaser.Scene {
         this.gameOver = false;
 
         this.character.anims.play('walk');
-        
-        
+
+        level = 0;
+        //let previousLevel = 0
+        //let currentTime = this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
+
+        this.difficultyTimer = this.time.addEvent({
+            delay: 1000,
+            callback: this.levelBump,
+            callbackScope: this,
+            loop: true,
+        });  
     }
 
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
+        //this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5); // broken timer
 
         if(!this.gameOver){
             this.flashlight.update();
@@ -58,10 +68,15 @@ class Play extends Phaser.Scene {
             character.x + character.width > obstacle.x && 
             character.y < obstacle.y + obstacle.height &&
             character.height + character.y > obstacle. y) {
+                this.gameOver = true;
                 return true;
         } else {
             return false;
         }
     }
 
+    levelBump() {
+
+    level++;   
+    }
 }
