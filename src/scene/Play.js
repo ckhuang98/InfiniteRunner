@@ -21,15 +21,17 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // place background
-        this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0);
-        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0);
-        this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
-
+        this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.obstacleGroup = this.add.group({
             runChildUpdate: true
         });
-
         this.addObstacle(1);
+        this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
+        this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
+
+
+
+        
 
         
 
@@ -68,15 +70,15 @@ class Play extends Phaser.Scene {
 
     addObstacle(num){
         if(num == 1){
-            let pothole = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'pothole').setOrigin(0,0);
+            let pothole = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'pothole').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(pothole);
             obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 2){
-            let car = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'car').setOrigin(0,0);
+            let car = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'car').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(car);
             obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 3){
-            let car2 = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'car2').setOrigin(0,0);
+            let car2 = new Obstacle(this, Phaser.Math.Between(193, 368), -40, 'car2').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(car);
             obstacleArray = this.obstacleGroup.getChildren();
         }
