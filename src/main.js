@@ -21,5 +21,6 @@ let newHighScore = false;
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
 game.settings = {
-    startSpeed: 4
+    startSpeed: 1,
+    hearts: 5
 }
