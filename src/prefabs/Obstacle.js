@@ -15,7 +15,7 @@ class Obstacle extends Phaser.GameObjects.Sprite {
     reset() {
         let randomX = Phaser.Math.Between(188, 378);
         this.x = randomX;
-        this.y = -40;
+        this.y = -50;
 
 /*
         let randomX = Phaser.Math.Between(1, 4);

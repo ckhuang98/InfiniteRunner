@@ -64,15 +64,15 @@ class Play extends Phaser.Scene {
 
     addObstacle(num){
         if(num == 1){
-            let pothole = new Obstacle(this, Phaser.Math.Between(188, 378), -40, 'pothole').setOrigin(0,0).setDepth(-1);
+            let pothole = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'pothole').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(pothole);
             obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 2){
-            let car = new Obstacle(this, Phaser.Math.Between(188, 378), -40, 'car').setOrigin(0,0).setDepth(-1);
+            let car = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'car').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(car);
             obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 3){
-            let car2 = new Obstacle(this, Phaser.Math.Between(188, 378), -40, 'car2').setOrigin(0,0).setDepth(-1);
+            let car2 = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'car2').setOrigin(0,0).setDepth(-1);
             this.obstacleGroup.add(car);
             obstacleArray = this.obstacleGroup.getChildren();
         }
@@ -135,7 +135,7 @@ class Play extends Phaser.Scene {
         console.log(gameOver);
         character.play('flash');
 
-        this.flashTime = this.time.delayedCall(3000, () => {
+        this.flashTime = this.time.delayedCall(2500, () => {
             this.character.play('walk');
         }, null, this);
 
