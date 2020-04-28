@@ -16,7 +16,7 @@ game.easyMode = true;
 
 let currentTime;
 let level;
-let highScore;
+let highScore = 0;
 let newHighScore = false;
 let obstacleArray;
 

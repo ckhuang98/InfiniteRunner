@@ -9,7 +9,7 @@ class Menu extends Phaser.Scene {
 
     create(){
         this.add.tileSprite(0, 0, 600, 600, 'menu').setOrigin(0, 0);
-        
+        this.add.text(370, 500, `${highScore}s`, { fontFamily: 'Informal Roman', fontSize: '40px', color: '#FFFFFF' }).setOrigin(0.5);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
