@@ -14,6 +14,8 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard Door Close-SoundBible.com-399662278.mp3');
         this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
+        this.load.audio('growl', 'Monster Growl-SoundBible.com-344645592.mp3');
+        this.load.audio('background', 'background noise - 4/28/20, 11.00 AM.mp3');
     }
 
     create(){

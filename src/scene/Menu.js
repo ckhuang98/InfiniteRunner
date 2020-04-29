@@ -5,6 +5,7 @@ class Menu extends Phaser.Scene {
     preload(){
         this.load.image('menu', './assets/menu.png');
         this.load.audio('click', './assets/Click-SoundBible.com-1387633738.mp3');
+        this.load.audio('menuTheme', './assets/2018-02-24_-_Monster_In_The_Field_-_David_Fesliyan.mp3');
     }
 
     create(){
