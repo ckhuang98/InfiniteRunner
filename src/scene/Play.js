@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
+        this.bgm.loop = true;
         this.bgm.play();
         this.obstacleGroup = this.add.group({
             runChildUpdate: true
