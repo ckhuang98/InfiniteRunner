@@ -57,8 +57,9 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true,
         });  
+        this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
         this.heartsLeft = game.settings.hearts;
-        
+        this.currentHearts = this.add.text(130, 95, `x${this.heartsLeft}`, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
 
@@ -87,6 +88,7 @@ class Play extends Phaser.Scene {
             this.character.update();
         }
         if(this.gameOver){
+            game.settings.startSpeed = 1;
             this.scene.start("gameOverScene");
         }
 
