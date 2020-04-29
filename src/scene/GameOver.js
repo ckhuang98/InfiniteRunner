@@ -14,8 +14,8 @@ class GameOver extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameOverSound = this.sound.add('growl'); // sound for when game is over.
         this.gameOverSound.play();
-
-        if(localStorage.getItem('hiscore') != null) {
+        
+        /*if(localStorage.getItem('hiscore') != null) {
             let storedScore = parseInt(localStorage.getItem('hiscore'));
             //console.log(`storedScore: ${storedScore}`);
             // see if current score is higher than stored score
@@ -34,7 +34,8 @@ class GameOver extends Phaser.Scene {
             highScore = level;
             localStorage.setItem('hiscore', highScore.toString());
             newHighScore = true;
-        }
+        }*/
+        highScore = level;
         this.add.text(450, 310, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
     }
     update(){

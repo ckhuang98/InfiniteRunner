@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
+        this.bgm.loop = true;
         this.bgm.play();
         this.obstacleGroup = this.add.group({
             runChildUpdate: true
@@ -57,8 +58,9 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true,
         });  
+        this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
         this.heartsLeft = game.settings.hearts;
-        
+        this.currentHearts = this.add.text(145, 95, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
 
@@ -87,6 +89,7 @@ class Play extends Phaser.Scene {
             this.character.update();
         }
         if(this.gameOver){
+            game.settings.startSpeed = 1;
             this.scene.start("gameOverScene");
         }
 
@@ -128,6 +131,7 @@ class Play extends Phaser.Scene {
         this.sfx = this.sound.add('thud');
         this.sfx.play();
         this.heartsLeft--;
+        this.currentHearts.setText(`x${this.heartsLeft}  `);
         obstacle.reset();
         if(this.heartsLeft == 0){
             this.gameOver = true;
