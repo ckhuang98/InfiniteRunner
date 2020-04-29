@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
         });  
         this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
         this.heartsLeft = game.settings.hearts;
-        this.currentHearts = this.add.text(130, 95, `x${this.heartsLeft}`, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        this.currentHearts = this.add.text(145, 95, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
 
@@ -130,6 +130,7 @@ class Play extends Phaser.Scene {
         this.sfx = this.sound.add('thud');
         this.sfx.play();
         this.heartsLeft--;
+        this.currentHearts.setText(`x${this.heartsLeft}  `);
         obstacle.reset();
         if(this.heartsLeft == 0){
             this.gameOver = true;
