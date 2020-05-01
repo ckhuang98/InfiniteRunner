@@ -50,21 +50,63 @@ class Play extends Phaser.Scene {
 
         this.character.anims.play('walk');
 
+        //seconds in game
         level = 0;
-        //let previousLevel = 0
-        currentTime = this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
 
+        //minutes in game
+        minute = 0;
+
+        currentMinute = this.add.text(495, 100, `00: `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
+        currentSecond = this.add.text(560, 100, `00 `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
+
+        //delays time until a second has passed then calls levelBump
         this.difficultyTimer = this.time.addEvent({
             delay: 1000,
             callback: this.levelBump,
             callbackScope: this,
             loop: true,
-        });  
-        this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
+        });
+
+        //delays time until a minute has passed then calls minuteBump
+        this.difficultyTimer = this.time.addEvent({
+            delay: 60000,
+            callback: this.minuteBump,
+            callbackScope: this,
+            loop: true,
+        });   
+
+        this.heart = this.add.image(20, 80, 'heart').setOrigin(0.0);
         this.heartsLeft = game.settings.hearts;
-        this.currentHearts = this.add.text(145, 95, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        this.currentHearts = this.add.text(120, 100, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
+
+
+    update(){
+        this.background.tilePositionY -= game.settings.startSpeed;
+        if(level % 60 < 9){
+            currentSecond.setText(`0${level % 60} `)
+        }else{
+            currentSecond.setText(`${level % 60} `)
+        }
+
+        if(minute < 9){
+            currentMinute.setText(`0${minute}: `)
+        }else{
+            currentMinute.setText(`${minute}: `)
+        }
+        if(!this.gameOver){
+            this.flashlight.update();
+            this.character.update();
+        }
+        if(this.gameOver){
+            game.settings.startSpeed = 1;
+            this.scene.start("gameOverScene");
+        }
+
+        this.checkCollision(this.character, obstacleArray);
+    }
+
 
     addObstacle(num){
         if(num == 1){
@@ -80,22 +122,6 @@ class Play extends Phaser.Scene {
             this.obstacleGroup.add(car);
             obstacleArray = this.obstacleGroup.getChildren();
         }
-    }
-
-    update(){
-        this.background.tilePositionY -= game.settings.startSpeed;
-        currentTime.setText(`${level}s`)
-
-        if(!this.gameOver){
-            this.flashlight.update();
-            this.character.update();
-        }
-        if(this.gameOver){
-            game.settings.startSpeed = 1;
-            this.scene.start("gameOverScene");
-        }
-
-        this.checkCollision(this.character, obstacleArray);
     }
 
     checkCollision(character, obstacleGroup) {
@@ -127,6 +153,10 @@ class Play extends Phaser.Scene {
         if(level == 36){
             this.addObstacle(2);
         }
+    }
+
+    minuteBump(){
+        minute++;
     }
     // Makes character lose life, and set gameover to true
     loseLife(character, obstacle){

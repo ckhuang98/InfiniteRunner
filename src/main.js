@@ -14,8 +14,10 @@ let HEIGHT = game.config.height;
 let gameOver = false;
 game.easyMode = true;
 
-let currentTime;
+let currentSecond;
+let currentMinute;
 let level;
+let minute;
 let highScore = 0;
 let newHighScore = false;
 let obstacleArray;
