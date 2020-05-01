@@ -17,8 +17,13 @@ class Play extends Phaser.Scene {
     }
 
     create(){
+        // Implement physics
+
+
+
+
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);    
         // place background
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
@@ -31,22 +36,7 @@ class Play extends Phaser.Scene {
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
 
-        this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1, first: 0}),
-            frameRate: 5,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'flash',
-            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 4, first: 0}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.gameOver = false;
-
-        this.character.anims.play('walk');
+        gameOver = false;
 
         level = 0;
         //let previousLevel = 0
@@ -59,8 +49,8 @@ class Play extends Phaser.Scene {
             loop: true,
         });  
         this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
-        this.heartsLeft = game.settings.hearts;
-        this.currentHearts = this.add.text(145, 95, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        
+        this.currentHearts = this.add.text(145, 95, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
 
@@ -84,11 +74,11 @@ class Play extends Phaser.Scene {
         this.background.tilePositionY -= game.settings.startSpeed;
         currentTime.setText(`${level}s`)
 
-        if(!this.gameOver){
+        if(!gameOver){
             this.flashlight.update();
             this.character.update();
         }
-        if(this.gameOver){
+        if(gameOver){
             game.settings.startSpeed = 1;
             this.scene.start("gameOverScene");
         }
@@ -103,7 +93,7 @@ class Play extends Phaser.Scene {
                 character.x + character.width > obstacleGroup[i].x && 
                 character.y < obstacleGroup[i].y + obstacleGroup[i].height &&
                 character.height + character.y > obstacleGroup[i]. y){
-                    this.loseLife(this.character, obstacleGroup[i]);
+                    this.character.loseLife(this.character, obstacleGroup[i]);
                 }
         }
     }
@@ -126,24 +116,5 @@ class Play extends Phaser.Scene {
             this.addObstacle(2);
         }
     }
-    // Makes character lose life, and set gameover to true
-    loseLife(character, obstacle){
-        this.sfx = this.sound.add('thud');
-        this.sfx.play();
-        this.heartsLeft--;
-        this.currentHearts.setText(`x${this.heartsLeft}  `);
-        obstacle.reset();
-        if(this.heartsLeft == 0){
-            this.gameOver = true;
-        }
-        character.play('flash');
-
-        this.flashTime = this.time.delayedCall(2500, () => {
-            this.character.play('walk');
-        }, null, this);
-
-        console.log(this.heartsLeft);
-    }
-
 
 }
