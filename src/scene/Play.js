@@ -33,6 +33,8 @@ class Play extends Phaser.Scene {
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
 
+        gameOver = false;
+
         //seconds in game
         level = 0;
 
@@ -77,11 +79,11 @@ class Play extends Phaser.Scene {
         }else{
             currentMinute.setText(`${minute}: `)
         }
-        if(!this.gameOver){
+        if(!gameOver){
             this.flashlight.update();
             this.character.update();
         }
-        if(this.gameOver){
+        if(gameOver){
             game.settings.startSpeed = 1;
             this.scene.start("gameOverScene");
         }
@@ -113,7 +115,7 @@ class Play extends Phaser.Scene {
                 character.x + character.width > obstacleGroup[i].x && 
                 character.y < obstacleGroup[i].y + obstacleGroup[i].height &&
                 character.height + character.y > obstacleGroup[i]. y){
-                    this.loseLife(this.character, obstacleGroup[i]);
+                    this.character.loseLife(this.character, obstacleGroup[i]);
                 }
         }
     }
