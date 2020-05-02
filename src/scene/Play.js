@@ -14,8 +14,8 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
         this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
-        this.load.audio('growl', '/assets/Monster_Growl.mp3');
-        this.load.audio('background', '/assets/backgroundnoise.mp3');
+        this.load.audio('growl', './assets/Monster_Growl.mp3');
+        this.load.audio('background', './assets/backgroundnoise.mp3');
     }
 
     create(){
@@ -68,23 +68,23 @@ class Play extends Phaser.Scene {
 
     update(){
         this.background.tilePositionY -= game.settings.startSpeed;
-        if(level % 60 < 9){
+        if(level % 60 < 10){
             currentSecond.setText(`0${level % 60} `)
         }else{
             currentSecond.setText(`${level % 60} `)
         }
 
-        if(minute < 9){
+        if(minute < 10){
             currentMinute.setText(`0${minute}: `)
         }else{
             currentMinute.setText(`${minute}: `)
         }
+
         if(!gameOver){
             this.flashlight.update();
             this.character.update();
-        }
-        if(gameOver){
-            game.settings.startSpeed = 1;
+        }else{
+            game.settings.startSpeed = 1; // reset speed
             this.scene.start("gameOverScene");
         }
 

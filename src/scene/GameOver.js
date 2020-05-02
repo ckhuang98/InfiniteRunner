@@ -15,28 +15,44 @@ class GameOver extends Phaser.Scene {
         this.gameOverSound = this.sound.add('growl'); // sound for when game is over.
         this.gameOverSound.play();
         
-        /*if(localStorage.getItem('hiscore') != null) {
-            let storedScore = parseInt(localStorage.getItem('hiscore'));
-            //console.log(`storedScore: ${storedScore}`);
-            // see if current score is higher than stored score
-            if(level > storedScore) {
-                //console.log(`New high score: ${level}`);
-                localStorage.setItem('hiscore', level.toString());
-                highScore = level;
-                newHighScore = true;
-            } else {
-                //console.log('No new high score :/');
-                highScore = parseInt(localStorage.getItem('hiscore'));
-                newHighScore = false;
-            }
-        } else {
-            //console.log('No high score stored. Creating new.');
+        if(highScore == 0)
+        {
             highScore = level;
-            localStorage.setItem('hiscore', highScore.toString());
-            newHighScore = true;
-        }*/
-        highScore = level;
-        this.add.text(450, 310, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '48px', color: '#8a0303' }).setOrigin(0.5);
+            if(level < 10){//if somehow under 15 sec just in case
+                highScoreStr = `00:0${level}`;
+            }
+            else if(minute < 10){
+                highScoreStr = `0${minute}:${level % 60}`;
+            }else{
+                highScoreStr = `${minute}:${level % 60}`;
+            }
+            this.add.text(420, 260, `${highScoreStr} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+            this.add.text(485, 355, `${highScoreStr} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+        }else if(highScore < level){
+            if(level < 10){//if somehow under 15 sec just in case
+                highScoreStr = `00:0${level}`;
+            }
+            else if(minute < 10){
+                highScoreStr = `0${minute}:${level % 60}`;
+            }else{
+                highScoreStr = `${minute}:${level % 60}`;
+            }
+            this.add.text(420, 260, `${highScoreStr} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+            this.add.text(485, 355, `${highScoreStr} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+        }else{
+            let localScore = '';
+            if(level < 10){//if somehow under 15 sec just in case
+                localScore = `00:0${level}`;
+            }
+            else if(minute < 10){
+                localScore = `0${minute}:${level % 60}`;
+            }else{
+                localScore = `${minute}:${level % 60}`;
+            }
+            this.add.text(420, 260, `${localScore} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+            this.add.text(485, 355, `${highScoreStr} `, { fontFamily: 'Informal Roman', fontSize: '46px', color: '#8a0303' }).setOrigin(0.5);
+        }
+        
     }
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {

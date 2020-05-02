@@ -12,14 +12,15 @@ let game = new Phaser.Game(config);
 let WIDTH = game.config.width;
 let HEIGHT = game.config.height;
 let gameOver = false;
-game.easyMode = true;
+let modeEasy = true;
+let modeSet = "";
 
 let currentSecond;
 let currentMinute;
 let level;
 let minute;
 let highScore = 0;
-let newHighScore = false;
+let highScoreStr = '00:00';
 let obstacleArray;
 
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
