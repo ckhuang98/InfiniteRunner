@@ -1,9 +1,28 @@
 // Character prefab
 // Character Fix
 class Character extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame) {
+    constructor(scene, x, y, texture, frame, ) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
+        
+
+        this.scene.anims.create({
+            key: 'walk',
+            frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 1, first: 0}),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.scene.anims.create({
+            key: 'flash',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 0, end: 4, first: 0}),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.play('walk');
+
+        this.heartsLeft = game.settings.hearts;
     }
 
     update(){
@@ -12,5 +31,24 @@ class Character extends Phaser.Physics.Arcade.Sprite {
         } else if (keyRIGHT.isDown && this.x <= 410) {
             this.x += 2.5;
         }
+    }
+
+
+    loseLife(character, obstacle){
+        this.sfx = this.scene.sound.add('thud');
+        this.sfx.play();
+        this.heartsLeft--;
+        this.scene.currentHearts.setText(`x${this.heartsLeft}  `);
+        obstacle.reset();
+        if(this.heartsLeft == 0){
+            gameOver = true;
+        }
+        character.play('flash');
+
+        this.flashTime = this.scene.time.delayedCall(2500, () => {
+            this.scene.character.play('walk');
+        }, null, this);
+
+        console.log(this.heartsLeft);
     }
 }
