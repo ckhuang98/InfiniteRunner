@@ -4,9 +4,9 @@ let config = {
     width: 600,
     height: 600,
     physics: {
-        default: "arcade",
+        default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
     scene: [Menu, Play, PlayHard, GameOver ]
