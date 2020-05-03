@@ -17,6 +17,8 @@ class PlayHard extends Phaser.Scene {
         this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
         this.load.audio('growl', './assets/Monster_Growl.mp3');
         this.load.audio('background', './assets/backgroundnoise.mp3');
+        this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
+        this.load.spritesheet('monsterWalk', './assets/monsterSpriteDark.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
     }
 
     create(){
@@ -42,6 +44,7 @@ class PlayHard extends Phaser.Scene {
         this.addObstacle(Phaser.Math.Between(1,3));
 
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
+        this.monster = new Monster(this, WIDTH/2-75, 600, 'monsterWalk').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
         //this.character.body.setSize(38, 22).setOffset(2, 24);
 
@@ -99,6 +102,7 @@ class PlayHard extends Phaser.Scene {
         if(!gameOver){
             this.flashlight.update();
             this.character.update();
+            this.monster.update();
             // checks overlap
             this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
         }else{
