@@ -3,6 +3,12 @@ let config = {
     type: Phaser.CANVAS,
     width: 600,
     height: 600,
+    physics: {
+        default: "arcade",
+        arcade: {
+            debug: true
+        }
+    },
     scene: [Menu, Play, GameOver ]
 }
 

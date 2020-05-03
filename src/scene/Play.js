@@ -19,19 +19,31 @@ class Play extends Phaser.Scene {
     }
 
     create(){
+
+        // Create key variables
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        // place background
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);    
+
+        // place background & play background music
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
-        this.obstacleGroup = this.add.group({
+
+        // Create a physics group for obstacles
+        this.obstacleGroup = this.physics.add.group({
             runChildUpdate: true
         });
-        this.addObstacle(1);
+        this.obstacleGroup.enableBody = true;
+        this.obstacleGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
+        this.obstacleArray;
+        // Add one default obstacle
+        this.addObstacle(Phaser.Math.Between(1,3));
+
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
+        //this.character.body.setSize(38, 22).setOffset(2, 24);
 
         gameOver = false;
 
@@ -46,13 +58,15 @@ class Play extends Phaser.Scene {
 
         //delays time until a second has passed then calls levelBump
         this.difficultyTimer = this.time.addEvent({
-            delay: 1000,
+            delay: 100,
             callback: this.levelBump,
             callbackScope: this,
             loop: true,
         });
 
-        //delays time until a minute has passed then calls minuteBump
+        this.spawnTimerMs= 0;
+
+                //delays time until a minute has passed then calls minuteBump
         this.difficultyTimer = this.time.addEvent({
             delay: 60000,
             callback: this.minuteBump,
@@ -60,8 +74,9 @@ class Play extends Phaser.Scene {
             loop: true,
         });   
 
-        this.heart = this.add.image(20, 80, 'heart').setOrigin(0.0);
-        this.currentHearts = this.add.text(120, 100, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
+        
+        this.currentHearts = this.add.text(145, 95, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
 
@@ -94,48 +109,62 @@ class Play extends Phaser.Scene {
 
     addObstacle(num){
         if(num == 1){
-            let pothole = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'pothole').setOrigin(0,0).setDepth(-1);
-            this.obstacleGroup.add(pothole);
-            obstacleArray = this.obstacleGroup.getChildren();
+            let pothole = new Obstacle(this, Phaser.Math.Between(188, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
+            // set collision box
+            pothole.body.setSize(32,32);
+            this.obstacleGroup.add(pothole, true);
+            this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 2){
-            let car = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'car').setOrigin(0,0).setDepth(-1);
-            this.obstacleGroup.add(car);
-            obstacleArray = this.obstacleGroup.getChildren();
+            let car = new Obstacle(this, Phaser.Math.Between(188, 378), -150, 'car').setOrigin(0,0).setDepth(-1);
+            car.body.setSize(50,60);
+            this.obstacleGroup.add(car, true);
+            this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 3){
-            let car2 = new Obstacle(this, Phaser.Math.Between(188, 378), -50, 'car2').setOrigin(0,0).setDepth(-1);
-            this.obstacleGroup.add(car);
-            obstacleArray = this.obstacleGroup.getChildren();
+            let car2 = new Obstacle(this, Phaser.Math.Between(188, 378), -150, 'car2').setOrigin(0,0).setDepth(-1);
+            car2.body.setSize(50,60);
+            this.obstacleGroup.add(car2, true);
+            this.obstacleArray = this.obstacleGroup.getChildren();
         }
     }
 
-    checkCollision(character, obstacleGroup) {
-        // simple AABB checking
-        for(let i = 0; i < obstacleGroup.length; i++){
-            if (character.x < obstacleGroup[i].x + obstacleGroup[i].width && 
-                character.x + character.width > obstacleGroup[i].x && 
-                character.y < obstacleGroup[i].y + obstacleGroup[i].height &&
-                character.height + character.y > obstacleGroup[i]. y){
-                    this.character.loseLife(this.character, obstacleGroup[i]);
-                }
+    update(){
+        this.background.tilePositionY -= game.settings.startSpeed;
+        currentTime.setText(`${level}s`);
+        
+
+        if(!gameOver){
+            this.flashlight.update();
+            this.character.update();
+            this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
         }
+        if(gameOver){
+            game.settings.startSpeed = 1;
+            this.scene.start("gameOverScene");
+        } 
     }
 
     levelBump() {
-        level++;
+        this.spawnTimerMs += 100;
 
-        if(level % 3 == 0 && game.settings.startSpeed < 3.5){
+        if(this.spawnTimerMs % 1000 == 0){
+            level++;
+        }
+
+        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
+            this.addObstacle(Phaser.Math.Between(1,3));
+        } 
+        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 1000 == 0){
+            this.addObstacle(Phaser.Math.Between(1,3));
+        }
+        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 750 == 0){
+            this.addObstacle(Phaser.Math.Between(1,3));
+        }
+        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 500 == 0){
+            this.addObstacle(Phaser.Math.Between(1,3));
+        }
+
+        if(this.spawnTimerMs % 3000 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
-        }
-        if(level == 12){
-            this.addObstacle(1);
-        }
-
-        if(level == 24){
-            this.addObstacle(1);
-        }
-
-        if(level == 36){
-            this.addObstacle(2);
         }
     }
 
@@ -143,4 +172,8 @@ class Play extends Phaser.Scene {
         minute++;
     }
 
+    collisionHandler(player, obstacle){
+        obstacle.destroy();
+        player.loseLife();
+    }
 }
