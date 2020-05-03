@@ -1,3 +1,4 @@
+// Copies Play.js, with adjustments to speed and spawn rate to account for higher difficulty.
 class PlayHard extends Phaser.Scene {
     constructor() {
         super("playHardScene");
@@ -135,7 +136,7 @@ class PlayHard extends Phaser.Scene {
             level++;
         }
 
-        // changes spawn rate based on seconds passed
+        // changes spawn rate based on seconds passed (Hard)
         if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1000 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         } 
@@ -149,7 +150,7 @@ class PlayHard extends Phaser.Scene {
             this.addObstacle(Phaser.Math.Between(1,3));
         }
 
-        // every 3 second pass, increase game speed by 0.1
+        // every 1.5 second pass, increase game speed by 0.1 (Hard)
         if(this.spawnTimerMs % 1500 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
         }
