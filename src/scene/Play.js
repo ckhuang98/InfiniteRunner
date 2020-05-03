@@ -98,12 +98,11 @@ class Play extends Phaser.Scene {
         if(!gameOver){
             this.flashlight.update();
             this.character.update();
+            this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
         }else{
             game.settings.startSpeed = 1; // reset speed
             this.scene.start("gameOverScene");
         }
-
-        this.checkCollision(this.character, obstacleArray);
     }
 
 
@@ -125,22 +124,6 @@ class Play extends Phaser.Scene {
             this.obstacleGroup.add(car2, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
         }
-    }
-
-    update(){
-        this.background.tilePositionY -= game.settings.startSpeed;
-        currentTime.setText(`${level}s`);
-        
-
-        if(!gameOver){
-            this.flashlight.update();
-            this.character.update();
-            this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
-        }
-        if(gameOver){
-            game.settings.startSpeed = 1;
-            this.scene.start("gameOverScene");
-        } 
     }
 
     levelBump() {
