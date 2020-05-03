@@ -67,6 +67,8 @@ class GameOver extends Phaser.Scene {
             } else{
                 this.scene.start("playHardScene");
                 //this.menuTheme.stop();
+            } else{
+                this.scene.start("playHardScene");
             }
         }
     }
