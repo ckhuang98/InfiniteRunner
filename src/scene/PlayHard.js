@@ -1,6 +1,6 @@
-class Play extends Phaser.Scene {
+class PlayHard extends Phaser.Scene {
     constructor() {
-        super("playScene");
+        super("playHardScene");
     }
 
     preload(){
@@ -136,21 +136,21 @@ class Play extends Phaser.Scene {
         }
 
         // changes spawn rate based on seconds passed
-        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
+        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1000 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         } 
-        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 1000 == 0){
+        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 700 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 750 == 0){
+        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 500 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 500 == 0){
+        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 250 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
 
         // every 3 second pass, increase game speed by 0.1
-        if(this.spawnTimerMs % 3000 == 0 && game.settings.startSpeed < 3.5){
+        if(this.spawnTimerMs % 1500 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
         }
     }

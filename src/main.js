@@ -9,7 +9,7 @@ let config = {
             debug: true
         }
     },
-    scene: [Menu, Play, GameOver ]
+    scene: [Menu, Play, PlayHard, GameOver ]
 }
 
 // main game object
