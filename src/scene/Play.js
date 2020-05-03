@@ -6,16 +6,19 @@ class Play extends Phaser.Scene {
     preload(){
         this.load.image('background', './assets/background.png');           // preload background
         this.load.image('crack', './assets/crack.png');
-        this.load.image('pothole', './assets/pothole.png');
+        this.load.image('pothole', './assets/pothole1.png');
         this.load.image('car', './assets/first_draft_car.png');
         this.load.image('car2', './assets/red_car.png');
         this.load.image('heart', './assets/heart.png');
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
-        this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
+       // this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
         this.load.audio('growl', '/assets/Monster_Growl.mp3');
-        this.load.audio('background', '/assets/backgroundnoise.mp3');
+        this.load.audio('music', './assets/backgroundMusic.mp3');
+        this.load.audio('loop', './assets/backgroundLoop.mp3');
+       // this.load.audio('background', '/assets/backgroundnoise.mp3');
+
     }
 
     create(){
