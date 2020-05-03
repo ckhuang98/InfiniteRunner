@@ -1,6 +1,7 @@
-class Play extends Phaser.Scene {
+// Copies Play.js, with adjustments to speed and spawn rate to account for higher difficulty.
+class PlayHard extends Phaser.Scene {
     constructor() {
-        super("playScene");
+        super("playHardScene");
     }
 
     preload(){
@@ -16,8 +17,6 @@ class Play extends Phaser.Scene {
         this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
         this.load.audio('growl', './assets/Monster_Growl.mp3');
         this.load.audio('background', './assets/backgroundnoise.mp3');
-        this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
-        this.load.spritesheet('monsterWalk', './assets/monsterSpriteDark.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
     }
 
     create(){
@@ -43,7 +42,6 @@ class Play extends Phaser.Scene {
         this.addObstacle(Phaser.Math.Between(1,3));
 
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
-        this.monster = new Monster(this, WIDTH/2-75, 600, 'monsterWalk').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
         //this.character.body.setSize(38, 22).setOffset(2, 24);
 
@@ -80,6 +78,7 @@ class Play extends Phaser.Scene {
         this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
         
         this.currentHearts = this.add.text(145, 95, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        
     }
 
 
@@ -100,7 +99,6 @@ class Play extends Phaser.Scene {
         if(!gameOver){
             this.flashlight.update();
             this.character.update();
-            this.monster.update();
             // checks overlap
             this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
         }else{
@@ -138,22 +136,22 @@ class Play extends Phaser.Scene {
             level++;
         }
 
-        // changes spawn rate based on seconds passed
-        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
+        // changes spawn rate based on seconds passed (Hard)
+        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1000 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         } 
-        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 1000 == 0){
+        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 700 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 750 == 0){
+        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 500 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 500 == 0){
+        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 250 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
 
-        // every 3 second pass, increase game speed by 0.1
-        if(this.spawnTimerMs % 3000 == 0 && game.settings.startSpeed < 3.5){
+        // every 1.5 second pass, increase game speed by 0.1 (Hard)
+        if(this.spawnTimerMs % 1500 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
         }
     }
