@@ -37,8 +37,7 @@ class Play extends Phaser.Scene {
         this.obstacleGroup.enableBody = true;
         this.obstacleGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
-        this.obstacleArray;
-        // Add one default obstacle
+        // Add one starting obstacle
         this.addObstacle(Phaser.Math.Between(1,3));
 
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
@@ -56,7 +55,7 @@ class Play extends Phaser.Scene {
         currentMinute = this.add.text(495, 100, `00: `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
         currentSecond = this.add.text(560, 100, `00 `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
 
-        //delays time until a second has passed then calls levelBump
+        //delays time until a hundred ms has passed then calls levelBump
         this.difficultyTimer = this.time.addEvent({
             delay: 100,
             callback: this.levelBump,
@@ -64,6 +63,7 @@ class Play extends Phaser.Scene {
             loop: true,
         });
 
+        // keeps track of ms for spawn
         this.spawnTimerMs= 0;
 
                 //delays time until a minute has passed then calls minuteBump
@@ -98,6 +98,7 @@ class Play extends Phaser.Scene {
         if(!gameOver){
             this.flashlight.update();
             this.character.update();
+            // checks overlap
             this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
         }else{
             game.settings.startSpeed = 1; // reset speed
@@ -106,6 +107,7 @@ class Play extends Phaser.Scene {
     }
 
 
+    // Add obstacle to obstacle group
     addObstacle(num){
         if(num == 1){
             let pothole = new Obstacle(this, Phaser.Math.Between(188, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
@@ -133,6 +135,7 @@ class Play extends Phaser.Scene {
             level++;
         }
 
+        // changes spawn rate based on seconds passed
         if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         } 
@@ -146,6 +149,7 @@ class Play extends Phaser.Scene {
             this.addObstacle(Phaser.Math.Between(1,3));
         }
 
+        // every 3 second pass, increase game speed by 0.1
         if(this.spawnTimerMs % 3000 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
         }
