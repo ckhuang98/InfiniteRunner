@@ -110,18 +110,18 @@ class Play extends Phaser.Scene {
     // Add obstacle to obstacle group
     addObstacle(num){
         if(num == 1){
-            let pothole = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
+            let pothole = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
             // set collision box
             pothole.body.setSize(48,40);
             this.obstacleGroup.add(pothole, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 2){
-            let car = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'car').setOrigin(0,0).setDepth(-1);
+            let car = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'car').setOrigin(0,0).setDepth(-1);
             car.body.setSize(50,60);
             this.obstacleGroup.add(car, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 3){
-            let car2 = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'car2').setOrigin(0,0).setDepth(-1);
+            let car2 = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'car2').setOrigin(0,0).setDepth(-1);
             car2.body.setSize(50,60);
             this.obstacleGroup.add(car2, true);
             this.obstacleArray = this.obstacleGroup.getChildren();

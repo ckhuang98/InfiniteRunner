@@ -58,7 +58,13 @@ class GameOver extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.scene.start("menuScene");
         }else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start("playScene");
+            if(modeEasy == true){
+                this.scene.start("playScene");
+                this.menuTheme.stop();
+            } else{
+                this.scene.start("playHardScene");
+                this.menuTheme.stop();
+            }
         }
     }
 }

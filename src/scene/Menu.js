@@ -50,7 +50,6 @@ class Menu extends Phaser.Scene {
                 this.scene.start("playHardScene");
                 this.menuTheme.stop();
             }
-            
         }
     }
 }
