@@ -13,7 +13,8 @@ class Play extends Phaser.Scene {
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
-        this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
+        this.load.audio('bgm', './assets/backgroundMusic.mp3');
+        this.load.audio('newBgm', './assets/backgroundLoop.mp3');
         this.load.audio('growl', './assets/Monster_Growl.mp3');
         this.load.audio('background', './assets/backgroundnoise.mp3');
         this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
@@ -29,7 +30,7 @@ class Play extends Phaser.Scene {
         // place background & play background music
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
-        this.bgm.loop = true;
+        //this.bgm.loop = true;
         this.bgm.play();
 
         // Create a physics group for obstacles
@@ -137,7 +138,11 @@ class Play extends Phaser.Scene {
         if(this.spawnTimerMs % 1000 == 0){
             level++;
         }
-
+        if(this.spawnTimerMs == 37000){
+            this.newBgm = this.sound.add('newBgm');
+            this.newBgm.loop = true;
+            this.newBgm.play();
+        }
         // changes spawn rate based on seconds passed
         if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));

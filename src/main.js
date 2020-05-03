@@ -32,6 +32,6 @@ let obstacleArray;
 let keyLEFT, keyRIGHT, keyUP, keySPACE;
 
 game.settings = {
-    startSpeed: 1,
+    startSpeed: 0.5,
     hearts: 5
 }
