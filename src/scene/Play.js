@@ -103,10 +103,10 @@ class Play extends Phaser.Scene {
             this.monster.update();
             // checks overlap
             this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
-            this.bgm.stop();
         }else{
             game.settings.startSpeed = 1; // reset speed
             this.scene.start("gameOverScene");
+            this.bgm.stop();
         }
     }
 
