@@ -5,6 +5,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
+        this.body.enable = true;
         this.setCollideWorldBounds(true);
         
 
@@ -37,6 +38,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
 
 
     loseLife(){
+        this.body.enable = false;
         this.sfx = this.scene.sound.add('thud');
         this.sfx.play();
         this.heartsLeft--;
@@ -48,6 +50,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
 
         this.flashTime = this.scene.time.delayedCall(2500, () => {
             this.scene.character.play('walk');
+            this.body.enable = true;
         }, null, this);
 
         console.log(this.heartsLeft);

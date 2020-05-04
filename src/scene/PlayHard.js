@@ -69,7 +69,7 @@ class PlayHard extends Phaser.Scene {
         // keeps track of ms for spawn
         this.spawnTimerMs= 0;
 
-                //delays time until a minute has passed then calls minuteBump
+        //delays time until a minute has passed then calls minuteBump
         this.difficultyTimer = this.time.addEvent({
             delay: 60000,
             callback: this.minuteBump,
