@@ -3,7 +3,7 @@ Group members: Claire Camomile, Philip Cook, Cary Huang
 Game tile: Alone in the Dark
 Date completed: 5/3/2020
 Creative Tilt(Technical): We added a high score to track the minutes and seconds from a timer 
-that was not shown in class, and developed a spawning algorithm for obstacles in the game that was not covered in class.
+that was not shown in class, and developed a random spawning algorithm for obstacles in the game that was not covered in class.
 Creative Tilt(Artistic): Our endless runner has it's own style as we created completely original art 
 with the exception of all sound assets, which are cited below. We attempted something new with our endless 
 runner by having the gameplay be dependent on a light mechanic which only allowed the player to 
