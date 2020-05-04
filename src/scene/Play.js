@@ -13,10 +13,10 @@ class Play extends Phaser.Scene {
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
-        this.load.audio('bgm', './assets/backgroundMusic.mp3');
-        this.load.audio('newBgm', './assets/backgroundLoop.mp3');
+        this.load.audio('growl', '/assets/Monster_Growl.mp3');
+        this.load.audio('music', './assets/backgroundMusic.mp3');
+        this.load.audio('loop', './assets/backgroundLoop.mp3');
         this.load.audio('growl', './assets/Monster_Growl.mp3');
-        this.load.audio('background', './assets/backgroundnoise.mp3');
         this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
         this.load.spritesheet('monsterWalk', './assets/monsterSpriteDark.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
     }
