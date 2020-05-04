@@ -13,12 +13,13 @@ class Play extends Phaser.Scene {
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
-       // this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
         this.load.audio('growl', '/assets/Monster_Growl.mp3');
         this.load.audio('music', './assets/backgroundMusic.mp3');
         this.load.audio('loop', './assets/backgroundLoop.mp3');
-       // this.load.audio('background', '/assets/backgroundnoise.mp3');
 
+        this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
+        this.load.audio('growl', './assets/Monster_Growl.mp3');
+        this.load.audio('background', './assets/backgroundnoise.mp3');
     }
 
     create(){
@@ -36,38 +37,64 @@ class Play extends Phaser.Scene {
         this.flashlight = new Flashlight(this, -300, 0, 'lightConeLow').setScale(0.5, 0.5).setOrigin(0,0).setDepth(0);
         this.character = new Character(this, WIDTH/2-10, HEIGHT - 120, 'player').setScale(0.5, 0.5).setOrigin(0,0); // order of creation matters
 
-        this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1, first: 0}),
-            frameRate: 5,
-            repeat: -1
-        });
+        gameOver = false;
 
-        this.anims.create({
-            key: 'flash',
-            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 4, first: 0}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.gameOver = false;
-
-        this.character.anims.play('walk');
-
+        //seconds in game
         level = 0;
-        //let previousLevel = 0
-        currentTime = this.add.text(500, 100, `${level}s`, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
 
+        //minutes in game
+        minute = 0;
+
+        currentMinute = this.add.text(495, 100, `00: `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
+        currentSecond = this.add.text(560, 100, `00 `, { fontFamily: 'Informal Roman', fontSize: '60px', color: '#8a0303' }).setOrigin(0.5);
+
+        //delays time until a second has passed then calls levelBump
         this.difficultyTimer = this.time.addEvent({
             delay: 1000,
             callback: this.levelBump,
             callbackScope: this,
             loop: true,
-        });  
-        this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
-        this.heartsLeft = game.settings.hearts;
-        this.currentHearts = this.add.text(145, 95, `x${this.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        });
+
+        //delays time until a minute has passed then calls minuteBump
+        this.difficultyTimer = this.time.addEvent({
+            delay: 60000,
+            callback: this.minuteBump,
+            callbackScope: this,
+            loop: true,
+        });   
+
+        this.heart = this.add.image(20, 80, 'heart').setOrigin(0.0);
+        this.currentHearts = this.add.text(120, 100, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
         
     }
+
+
+    update(){
+        this.background.tilePositionY -= game.settings.startSpeed;
+        if(level % 60 < 10){
+            currentSecond.setText(`0${level % 60} `)
+        }else{
+            currentSecond.setText(`${level % 60} `)
+        }
+
+        if(minute < 10){
+            currentMinute.setText(`0${minute}: `)
+        }else{
+            currentMinute.setText(`${minute}: `)
+        }
+
+        if(!gameOver){
+            this.flashlight.update();
+            this.character.update();
+        }else{
+            game.settings.startSpeed = 1; // reset speed
+            this.scene.start("gameOverScene");
+        }
+
+        this.checkCollision(this.character, obstacleArray);
+    }
+
 
     addObstacle(num){
         if(num == 1){
@@ -85,22 +112,6 @@ class Play extends Phaser.Scene {
         }
     }
 
-    update(){
-        this.background.tilePositionY -= game.settings.startSpeed;
-        currentTime.setText(`${level}s`)
-
-        if(!this.gameOver){
-            this.flashlight.update();
-            this.character.update();
-        }
-        if(this.gameOver){
-            game.settings.startSpeed = 1;
-            this.scene.start("gameOverScene");
-        }
-
-        this.checkCollision(this.character, obstacleArray);
-    }
-
     checkCollision(character, obstacleGroup) {
         // simple AABB checking
         for(let i = 0; i < obstacleGroup.length; i++){
@@ -108,7 +119,7 @@ class Play extends Phaser.Scene {
                 character.x + character.width > obstacleGroup[i].x && 
                 character.y < obstacleGroup[i].y + obstacleGroup[i].height &&
                 character.height + character.y > obstacleGroup[i]. y){
-                    this.loseLife(this.character, obstacleGroup[i]);
+                    this.character.loseLife(this.character, obstacleGroup[i]);
                 }
         }
     }
@@ -131,24 +142,9 @@ class Play extends Phaser.Scene {
             this.addObstacle(2);
         }
     }
-    // Makes character lose life, and set gameover to true
-    loseLife(character, obstacle){
-        this.sfx = this.sound.add('thud');
-        this.sfx.play();
-        this.heartsLeft--;
-        this.currentHearts.setText(`x${this.heartsLeft}  `);
-        obstacle.reset();
-        if(this.heartsLeft == 0){
-            this.gameOver = true;
-        }
-        character.play('flash');
 
-        this.flashTime = this.time.delayedCall(2500, () => {
-            this.character.play('walk');
-        }, null, this);
-
-        console.log(this.heartsLeft);
+    minuteBump(){
+        minute++;
     }
-
 
 }

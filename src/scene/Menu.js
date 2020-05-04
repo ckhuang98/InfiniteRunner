@@ -10,12 +10,35 @@ class Menu extends Phaser.Scene {
 
     create(){
         this.add.tileSprite(0, 0, 600, 600, 'menu').setOrigin(0, 0);
-        this.add.text(370, 500, `${highScore}s`, { fontFamily: 'Informal Roman', fontSize: '40px', color: '#FFFFFF' }).setOrigin(0.5);
+        modeEasy = true;//reset default mode
+        game.settings = {//reset default mode
+            startSpeed: 1,
+            hearts: 5
+        }
+        modeSet = this.add.text(490, 458, "Easy", { fontFamily: 'Times New Roman', fontSize: '30px', color: '#FFFFFF'}).setOrigin(0.5);
+        this.add.text(370, 495, `${highScoreStr} `, { fontFamily: 'Times New Roman', fontSize: '30px', color: '#FFFFFF'}).setOrigin(0.5);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update(){
+        if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            if(modeEasy){
+                modeSet.setText("Hard")
+                modeEasy = false;
+                game.settings = {
+                    startSpeed: 1,
+                    hearts: 3
+                }
+            }else{
+                modeSet.setText("Easy")
+                modeEasy = true;
+                game.settings = {
+                    startSpeed: 1,
+                    hearts: 5
+                }
+            }   
+        }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start("playScene");
         }
