@@ -1,6 +1,7 @@
-class Play extends Phaser.Scene {
+// Copies Play.js, with adjustments to speed and spawn rate to account for higher difficulty.
+class PlayHard extends Phaser.Scene {
     constructor() {
-        super("playScene");
+        super("playHardScene");
     }
 
     preload(){
@@ -13,11 +14,8 @@ class Play extends Phaser.Scene {
         this.load.image('lightConeLow', './assets/flash_light_no_powerup.png');
         this.load.spritesheet('player', './assets/sprite4.png', {frameWidth: 38.4815, frameHeight: 50, startFrame: 0, endFrame: 2});      //  preload character
         this.load.audio('thud', './assets/Cupboard_Door_Close.mp3');
-        this.load.audio('growl', '/assets/Monster_Growl.mp3');
-        this.load.audio('music', './assets/backgroundMusic.mp3');
-        this.load.audio('loop', './assets/backgroundLoop.mp3');
-
-        this.load.audio('bgm', './assets/Wind-Mark_DiAngelo.mp3');
+        this.load.audio('bgm', './assets/backgroundMusic.mp3');
+        this.load.audio('newBgm', './assets/backgroundLoop.mp3');
         this.load.audio('growl', './assets/Monster_Growl.mp3');
         this.load.audio('background', './assets/backgroundnoise.mp3');
         this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
@@ -72,7 +70,7 @@ class Play extends Phaser.Scene {
         // keeps track of ms for spawn
         this.spawnTimerMs= 0;
 
-                //delays time until a minute has passed then calls minuteBump
+        //delays time until a minute has passed then calls minuteBump
         this.difficultyTimer = this.time.addEvent({
             delay: 60000,
             callback: this.minuteBump,
@@ -83,6 +81,7 @@ class Play extends Phaser.Scene {
         this.heart = this.add.image(50, 80, 'heart').setOrigin(0.0);
         
         this.currentHearts = this.add.text(145, 95, `x${this.character.heartsLeft}  `, { fontFamily: 'Informal Roman', fontSize: '56px', color: '#8a0303' }).setOrigin(0.5);
+        
     }
 
 
@@ -117,18 +116,18 @@ class Play extends Phaser.Scene {
     // Add obstacle to obstacle group
     addObstacle(num){
         if(num == 1){
-            let pothole = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
+            let pothole = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'pothole').setOrigin(0,0).setDepth(-1);
             // set collision box
             pothole.body.setSize(48,40);
             this.obstacleGroup.add(pothole, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 2){
-            let car = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'car').setOrigin(0,0).setDepth(-1);
+            let car = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'car').setOrigin(0,0).setDepth(-1);
             car.body.setSize(50,60);
             this.obstacleGroup.add(car, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
         } else if (num == 3){
-            let car2 = new Obstacle(this, Phaser.Math.Between(175, 378), -150, 'car2').setOrigin(0,0).setDepth(-1);
+            let car2 = new Obstacle(this, Phaser.Math.Between(180, 378), -150, 'car2').setOrigin(0,0).setDepth(-1);
             car2.body.setSize(50,60);
             this.obstacleGroup.add(car2, true);
             this.obstacleArray = this.obstacleGroup.getChildren();
@@ -146,22 +145,22 @@ class Play extends Phaser.Scene {
             this.bgm.loop = true;
             this.bgm.play();
         }
-        // changes spawn rate based on seconds passed
-        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){
+        // changes spawn rate based on seconds passed (Hard)
+        if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1000 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         } 
-        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 1000 == 0){
+        if(this.spawnTimerMs > 12000 && this.spawnTimerMs <= 24000 &&this.spawnTimerMs % 700 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 750 == 0){
+        if(this.spawnTimerMs > 24000 && this.spawnTimerMs <= 36000 &&this.spawnTimerMs % 500 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
-        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 500 == 0){
+        if(this.spawnTimerMs > 36000 && this.spawnTimerMs % 250 == 0){
             this.addObstacle(Phaser.Math.Between(1,3));
         }
 
-        // every 3 second pass, increase game speed by 0.1
-        if(this.spawnTimerMs % 3000 == 0 && game.settings.startSpeed < 3.5){
+        // every 1.5 second pass, increase game speed by 0.1 (Hard)
+        if(this.spawnTimerMs % 1500 == 0 && game.settings.startSpeed < 3.5){
             game.settings.startSpeed += 0.1
         }
     }

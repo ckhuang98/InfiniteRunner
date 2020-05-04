@@ -4,6 +4,9 @@ class Character extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, ) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.body.enable = true;
+        this.setCollideWorldBounds(true);
         
 
         this.scene.anims.create({
@@ -34,19 +37,20 @@ class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
 
-    loseLife(character, obstacle){
+    loseLife(){
+        this.body.enable = false;
         this.sfx = this.scene.sound.add('thud');
         this.sfx.play();
         this.heartsLeft--;
         this.scene.currentHearts.setText(`x${this.heartsLeft}  `);
-        obstacle.reset();
         if(this.heartsLeft == 0){
             gameOver = true;
         }
-        character.play('flash');
+        this.play('flash');
 
         this.flashTime = this.scene.time.delayedCall(2500, () => {
             this.scene.character.play('walk');
+            this.body.enable = true;
         }, null, this);
 
         console.log(this.heartsLeft);

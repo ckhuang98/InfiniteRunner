@@ -19,6 +19,9 @@ class Menu extends Phaser.Scene {
         this.add.text(370, 495, `${highScoreStr} `, { fontFamily: 'Times New Roman', fontSize: '30px', color: '#FFFFFF'}).setOrigin(0.5);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.menuTheme = this.sound.add('menuTheme');
+        this.menuTheme.loop = true;
+        this.menuTheme.play();
     }
 
     update(){
@@ -40,7 +43,13 @@ class Menu extends Phaser.Scene {
             }   
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start("playScene");
+            if(modeEasy == true){
+                this.scene.start("playScene");
+                this.menuTheme.stop();
+            } else{
+                this.scene.start("playHardScene");
+                this.menuTheme.stop();
+            }
         }
     }
 }
