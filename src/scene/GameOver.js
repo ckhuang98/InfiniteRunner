@@ -6,7 +6,9 @@ class GameOver extends Phaser.Scene {
     preload(){
         this.load.image('gameOver', './assets/game_over.png');
         this.load.audio('growl', './assets/Monster Growl-SoundBible.com-2140541932.mp3');
-        this.load.audio('GameOver', './assets/GameOver.mp3');
+        this.load.audio('gameOverSound', './assets/GameOver.mp3');
+        this.load.spritesheet('monsterEnd', './assets/monsterSprite.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
+        this.load.atlas('monsterSprite', './assets/monsterSprite.png', './assets/monsterSprite.json');
     }
 
     create(){
