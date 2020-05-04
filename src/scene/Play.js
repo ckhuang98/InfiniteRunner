@@ -171,7 +171,7 @@ class Play extends Phaser.Scene {
     }
 
     collisionHandler(player, obstacle){
-        obstacle.destroy();
+        obstacle.body.enable = false;
         player.loseLife();
     }
 }
