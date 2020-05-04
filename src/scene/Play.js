@@ -30,7 +30,6 @@ class Play extends Phaser.Scene {
         // place background & play background music
         this.background = this.add.tileSprite(0, 0, WIDTH, HEIGHT, 'background').setOrigin(0,0).setDepth(-1);
         this.bgm = this.sound.add('bgm');
-        //this.bgm.loop = true;
         this.bgm.play();
 
         // Create a physics group for obstacles
@@ -104,6 +103,7 @@ class Play extends Phaser.Scene {
             this.monster.update();
             // checks overlap
             this.physics.overlap(this.character, this.obstacleGroup, this.collisionHandler, null, this);
+            this.bgm.stop();
         }else{
             game.settings.startSpeed = 1; // reset speed
             this.scene.start("gameOverScene");
@@ -139,9 +139,9 @@ class Play extends Phaser.Scene {
             level++;
         }
         if(this.spawnTimerMs == 37000){
-            this.newBgm = this.sound.add('newBgm');
-            this.newBgm.loop = true;
-            this.newBgm.play();
+            this.bgm = this.sound.add('newBgm');
+            this.bgm.loop = true;
+            this.bgm.play();
         }
         // changes spawn rate based on seconds passed
         if(this.spawnTimerMs <= 12000 && this.spawnTimerMs % 1200 == 0){

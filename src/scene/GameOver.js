@@ -6,6 +6,7 @@ class GameOver extends Phaser.Scene {
     preload(){
         this.load.image('gameOver', './assets/game_over.png');
         this.load.audio('growl', './assets/Monster Growl-SoundBible.com-2140541932.mp3');
+        this.load.audio('gameOverSound', './assets/GameOver.mp3');
         this.load.spritesheet('monsterEnd', './assets/monsterSprite.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
         this.load.atlas('monsterSprite', './assets/monsterSprite.png', './assets/monsterSprite.json');
     }
@@ -23,8 +24,10 @@ class GameOver extends Phaser.Scene {
 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.gameOverSound = this.sound.add('growl'); // sound for when game is over.
-        this.gameOverSound.play();
+        this.gameOverGrowl = this.sound.add('growl'); // sound for when game is over.
+        this.gameOverGrowl.play();
+        this.gameOver = this.sound.add('gameOverSound'); // sound for when game is over.
+        this.gameOver.play();
         
         if(highScore < level){
             highScore = level;
@@ -63,10 +66,12 @@ class GameOver extends Phaser.Scene {
         }else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             if(modeEasy == true){
                 this.scene.start("playScene");
-                //this.menuTheme.stop();
+                this.gameOverGrowl.stop();
+                this.gameOver.stop();
             } else{
                 this.scene.start("playHardScene");
-                //this.menuTheme.stop();
+                this.gameOverGrowl.stop();
+                this.gameOver.stop();
             }
         }
     }
