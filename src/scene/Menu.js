@@ -22,10 +22,12 @@ class Menu extends Phaser.Scene {
         this.menuTheme = this.sound.add('menuTheme');
         this.menuTheme.loop = true;
         this.menuTheme.play();
+        this.click = this.sound.add('click');
     }
 
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.click.play();
             if(modeEasy){
                 modeSet.setText("Hard")
                 modeEasy = false;
@@ -43,6 +45,7 @@ class Menu extends Phaser.Scene {
             }   
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.click.play();
             if(modeEasy == true){
                 this.scene.start("playScene");
                 this.menuTheme.stop();

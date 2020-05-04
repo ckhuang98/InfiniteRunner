@@ -9,6 +9,7 @@ class GameOver extends Phaser.Scene {
         this.load.audio('gameOverSound', './assets/GameOver.mp3');
         this.load.spritesheet('monsterEnd', './assets/monsterSprite.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
         this.load.atlas('monsterSprite', './assets/monsterSprite.png', './assets/monsterSprite.json');
+        this.load.audio('click', './assets/press.mp3');
     }
 
     create(){
@@ -28,6 +29,7 @@ class GameOver extends Phaser.Scene {
         this.gameOverGrowl.play();
         this.gameOver = this.sound.add('gameOverSound'); // sound for when game is over.
         this.gameOver.play();
+        this.click = this.sound.add('click');
         
         if(highScore < level){
             highScore = level;
@@ -62,8 +64,10 @@ class GameOver extends Phaser.Scene {
     }
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.click.play();
             this.scene.start("menuScene");
         }else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.click.play();
             if(modeEasy == true){
                 this.gameOverGrowl.stop();
                 this.gameOver.stop();
