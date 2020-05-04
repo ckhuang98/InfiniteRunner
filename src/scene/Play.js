@@ -17,9 +17,6 @@ class Play extends Phaser.Scene {
         //https://freesound.org/people/joshuaempyre/sounds/478120/ by joshuaempyre
         this.load.audio('bgm', './assets/backgroundMusic.mp3');
         this.load.audio('newBgm', './assets/backgroundLoop.mp3');
-        
-        this.load.audio('growl', './assets/Monster_Growl.mp3');
-        this.load.audio('background', './assets/backgroundnoise.mp3');
         this.load.atlas('monsterSpriteDark', './assets/monsterSpriteDark.png', './assets/monsterSpriteDark.json');
         this.load.spritesheet('monsterWalk', './assets/monsterSpriteDark.png', {frameWidth: 300, frameHeight: 150, startFrame: 0, endFrame: 1});
     }

@@ -4,8 +4,8 @@ class Menu extends Phaser.Scene {
     }
     preload(){
         this.load.image('menu', './assets/menu.png');
-        this.load.audio('click', './assets/Click-SoundBible.com-1387633738.mp3');
-        this.load.audio('menuTheme', './assets/2018-02-24_-_Monster_In_The_Field_-_David_Fesliyan.mp3');
+        this.load.audio('click', './assets/press.mp3');
+        this.load.audio('menuTheme', './assets/menuSound.mp3');
     }
 
     create(){
@@ -22,10 +22,12 @@ class Menu extends Phaser.Scene {
         this.menuTheme = this.sound.add('menuTheme');
         this.menuTheme.loop = true;
         this.menuTheme.play();
+        this.click = this.sound.add('click');
     }
 
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.click.play();
             if(modeEasy){
                 modeSet.setText("Hard")
                 modeEasy = false;
@@ -43,6 +45,7 @@ class Menu extends Phaser.Scene {
             }   
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.click.play();
             if(modeEasy == true){
                 this.scene.start("playScene");
                 this.menuTheme.stop();
